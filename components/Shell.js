@@ -170,6 +170,9 @@ function Footer() {
   return (
     <footer className="closing" id="contact">
       <div className="wrap closing-inner">
+        <div className="orn" aria-hidden="true">
+          <i />
+        </div>
         <p className="kicker light">
           <Tx en="A conversation before a case" bn="মামলার আগে একটা কথা" />
         </p>

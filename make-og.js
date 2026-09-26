@@ -5,7 +5,7 @@ const fs = require("fs");
 
 const W = 1200, H = 630;
 
-const tiro = fontkit.openSync("node_modules/@fontsource/tiro-bangla/files/tiro-bangla-bengali-400-normal.woff2");
+const tiro = fontkit.openSync("node_modules/@fontsource/noto-serif-bengali/files/noto-serif-bengali-bengali-600-normal.woff2");
 const hind = fontkit.openSync("node_modules/@fontsource/hind-siliguri/files/hind-siliguri-bengali-500-normal.woff2");
 const hind4 = fontkit.openSync("node_modules/@fontsource/hind-siliguri/files/hind-siliguri-bengali-400-normal.woff2");
 const hindLatin = fontkit.openSync("node_modules/@fontsource/hind-siliguri/files/hind-siliguri-latin-500-normal.woff2");
