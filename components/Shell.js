@@ -4,15 +4,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Tx from "./Tx";
-import { StudioMark } from "./Marks";
-import { site, hasWhatsapp, whatsappLink } from "@/lib/site";
+import { Icon, StudioMark } from "./Marks";
+import { hasWhatsapp, site, telLink, whatsappLink } from "@/lib/site";
 import { applyLang } from "@/lib/lang";
 
 const links = [
-  { href: "/#work", id: "work", en: "Work", bn: "কাজ" },
-  { href: "/#services", id: "services", en: "Services", bn: "সার্ভিস" },
+  { href: "/#practice", id: "practice", en: "Practice", bn: "প্র্যাকটিস" },
+  { href: "/#about", id: "about", en: "About", bn: "পরিচয়" },
+  { href: "/#cases", id: "cases", en: "Results", bn: "ফলাফল" },
   { href: "/#process", id: "process", en: "Process", bn: "প্রসেস" },
-  { href: "/#studio", id: "studio", en: "Studio", bn: "স্টুডিও" },
+  { href: "/#faq", id: "faq", en: "FAQ", bn: "প্রশ্ন" },
 ];
 
 export default function Shell({ children }) {
@@ -44,7 +45,7 @@ export default function Shell({ children }) {
 
   useEffect(() => {
     if (pathname !== "/") return undefined;
-    const ids = ["work", "services", "process", "studio", "packages"];
+    const ids = ["practice", "about", "cases", "process", "fees", "faq"];
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -76,9 +77,16 @@ export default function Shell({ children }) {
       <div className="progress" style={{ transform: `scaleX(${progress})` }} />
       <header className={`nav ${scrolled ? "scrolled" : ""}`}>
         <div className="wrap nav-inner">
-          <Link href="/" className="brand" aria-label="YourLogo home">
+          <Link href="/" className="brand" aria-label="Home">
             <StudioMark />
-            <span className="brand-word">YourLogo</span>
+            <span className="brand-text">
+              <span className="brand-word">
+                <Tx en={site.wordmark.en} bn={site.wordmark.bn} />
+              </span>
+              <span className="brand-sub">
+                <Tx en="Supreme Court, Dhaka" bn="সুপ্রিম কোর্ট, ঢাকা" />
+              </span>
+            </span>
           </Link>
           <nav className="nav-links" aria-label="Primary">
             {links.map((l) => (
@@ -97,7 +105,7 @@ export default function Shell({ children }) {
               </button>
             </div>
             <Link href="/start" className="btn nav-cta">
-              <Tx en="Start a project" bn="প্রজেক্ট শুরু" />
+              <Tx en="Consult" bn="পরামর্শ নিন" />
             </Link>
             <button
               type="button"
@@ -121,14 +129,12 @@ export default function Shell({ children }) {
                 <Tx en={l.en} bn={l.bn} />
               </Link>
             ))}
-            <Link href="/#packages" onClick={() => setOpen(false)}>
-              <Tx en="Packages" bn="প্যাকেজ" />
-            </Link>
             <Link href="/start" onClick={() => setOpen(false)}>
-              <Tx en="Start a project" bn="প্রজেক্ট শুরু করুন" />
+              <Tx en="Request consultation" bn="পরামর্শের অনুরোধ" />
             </Link>
           </nav>
           <div className="menu-foot">
+            <a href={telLink()}>{site.phoneDisplay}</a>
             <a href={`mailto:${site.email}`}>{site.email}</a>
             <span>
               <Tx en={site.location.en} bn={site.location.bn} />
@@ -140,13 +146,20 @@ export default function Shell({ children }) {
       <main id="main">{children}</main>
       <Footer />
       <div className="mobile-bar">
-        {hasWhatsapp() ? (
-          <a className="btn ghost" href={whatsappLink()} target="_blank" rel="noreferrer">
-            WhatsApp
+        <a className="mb-call" href={telLink()} aria-label="Call">
+          <Icon name="phone" size={20} />
+          <span>
+            <Tx en="Call" bn="কল" />
+          </span>
+        </a>
+        {hasWhatsapp() && (
+          <a className="mb-wa" href={whatsappLink()} target="_blank" rel="noreferrer">
+            <Icon name="whatsapp" size={20} />
+            <span>WhatsApp</span>
           </a>
-        ) : null}
-        <Link href="/start" className="btn">
-          <Tx en="Start a project" bn="প্রজেক্ট শুরু" />
+        )}
+        <Link href="/start" className="mb-cta">
+          <Tx en="Consult" bn="পরামর্শ নিন" />
         </Link>
       </div>
     </>
@@ -154,37 +167,34 @@ export default function Shell({ children }) {
 }
 
 function Footer() {
-  const socials = [
-    site.instagram && { label: "Instagram", href: site.instagram },
-    site.facebook && { label: "Facebook", href: site.facebook },
-    site.behance && { label: "Behance", href: site.behance },
-  ].filter(Boolean);
-
   return (
     <footer className="closing" id="contact">
       <div className="wrap closing-inner">
         <p className="kicker light">
-          <Tx en="A conversation, not a contract" bn="চুক্তি নয় — একটা কথা" />
+          <Tx en="A conversation before a case" bn="মামলার আগে একটা কথা" />
         </p>
         <h2>
-          <Tx en="Have a name that needs a mark?" bn="একটা নাম আছে, যার একটা মার্ক দরকার?" />
+          <Tx
+            en="Let the law carry your side of the story."
+            bn="আপনার পক্ষের কথা, এবার আইন বলবে।"
+          />
         </h2>
         <p className="closing-dek">
           <Tx
-            en="Tell us what you're building. We reply within one business day — with a sense of fit, a timeline, and a clear quote. No payment to start the conversation."
-            bn="কী বানাচ্ছেন, একটু বলুন। এক ব্যবসায়িক দিনের মধ্যে উত্তর দিই — মিল আছে কি না, সময়, আর একটা পরিষ্কার কোট। কথা শুরু করতে কোনো পেমেন্ট নেই।"
+            en="Call, message, or leave a note in the form — the chamber replies within one business day. The first ten minutes are free; the advice is honest from the first minute."
+            bn="ফোন করুন, লিখুন, বা ফর্মে খোঁজ রাখুন — এক কর্মদিবসের মধ্যে চেম্বার থেকে উত্তর পাবেন। প্রথম ১০ মিনিট ফ্রি; পরামর্শ প্রথম মিনিট থেকেই সৎ।"
           />
         </p>
         <div className="closing-actions">
-          <Link href="/start" className="btn light">
-            <Tx en="Start a project" bn="প্রজেক্ট শুরু করুন" />
+          <Link href="/start" className="btn gold">
+            <Tx en="Request consultation" bn="পরামর্শের অনুরোধ" />
           </Link>
-          <a className="btn ghost-light" href={`mailto:${site.email}`}>
-            {site.email}
+          <a className="btn ghost-light" href={telLink()}>
+            <Icon name="phone" size={18} /> {site.phoneDisplay}
           </a>
           {hasWhatsapp() && (
             <a className="btn ghost-light" href={whatsappLink()} target="_blank" rel="noreferrer">
-              WhatsApp
+              <Icon name="whatsapp" size={18} /> WhatsApp
             </a>
           )}
         </div>
@@ -194,38 +204,43 @@ function Footer() {
           <div className="foot-brand">
             <StudioMark />
             <div>
-              <strong className="brand-word">YourLogo</strong>
+              <strong className="brand-word">
+                <Tx en={site.nameEn} bn={site.name} />
+              </strong>
               <p>
-                <Tx en={site.location.en} bn={site.location.bn} />
+                <Tx en={site.chamber.en} bn={site.chamber.bn} />
+                <br />
+                <Tx en={site.hours.en} bn={site.hours.bn} />
               </p>
             </div>
           </div>
           <nav className="foot-links" aria-label="Footer">
-            <Link href="/#work">
-              <Tx en="Work" bn="কাজ" />
+            <Link href="/#practice">
+              <Tx en="Practice" bn="প্র্যাকটিস" />
             </Link>
-            <Link href="/#services">
-              <Tx en="Services" bn="সার্ভিস" />
+            <Link href="/#cases">
+              <Tx en="Results" bn="ফলাফল" />
             </Link>
-            <Link href="/#packages">
-              <Tx en="Packages" bn="প্যাকেজ" />
+            <Link href="/#fees">
+              <Tx en="Fees" bn="ফি" />
             </Link>
             <Link href="/start">
-              <Tx en="Start" bn="শুরু" />
+              <Tx en="Consult" bn="পরামর্শ" />
             </Link>
-            {socials.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noreferrer">
-                {s.label}
-              </a>
-            ))}
+            {site.facebook && <a href={site.facebook} target="_blank" rel="noreferrer">Facebook</a>}
+            {site.linkedin && <a href={site.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
           </nav>
-          <p className="foot-copy">
-            © {new Date().getFullYear()} YourLogo.{" "}
-            <Tx
-              en="Identity studio. Marks with a long memory."
-              bn="আইডেন্টিটি স্টুডিও। যে মার্ক অনেকদিন মনে থাকে।"
-            />
-          </p>
+          <div className="foot-legal">
+            <p className="foot-copy">
+              © {new Date().getFullYear()} <Tx en={site.nameEn} bn={site.name} />.
+            </p>
+            <p className="foot-disclaimer">
+              <Tx
+                en="Information on this website is for general awareness only and does not constitute legal advice. An advocate–client relationship is formed only through a signed engagement."
+                bn="এই ওয়েবসাইটের তথ্য শুধু সাধারণ সচেতনতার জন্য; এটি আইনি পরামর্শ নয়। অ্যাডভোকেট–ক্লায়েন্ট সম্পর্ক গঠিত হয় কেবল লিখিত এনগেজমেন্টের মাধ্যমে।"
+              />
+            </p>
+          </div>
         </div>
       </div>
     </footer>

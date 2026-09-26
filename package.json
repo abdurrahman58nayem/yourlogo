@@ -1,11 +1,12 @@
 {
-  "name": "yourlogo",
+  "name": "advocate-chamber-portfolio",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p 3000"
+    "start": "next start -H 0.0.0.0 -p 3000",
+    "og": "node make-og.js"
   },
   "dependencies": {
     "@fontsource/fraunces": "^5.3.0",
@@ -15,5 +16,8 @@
     "next": "^15.5.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "fontkit": "^2.0.4"
   }
 }
