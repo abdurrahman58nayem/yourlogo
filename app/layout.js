@@ -10,42 +10,46 @@ const url = siteUrl();
 export const metadata = {
   metadataBase: new URL(url),
   title: {
-    default: "YourLogo — Identity studio in Dhaka",
-    template: "%s — YourLogo",
+    default: "অ্যাডভোকেট মো. আবদুল লতিফ — আইনজীবী, বাংলাদেশ সুপ্রিম কোর্ট",
+    template: "%s — অ্যাডভোকেট মো. আবদুল লতিফ",
   },
   description:
-    "YourLogo is a Dhaka identity studio. We design logos and brand systems people recognize at a glance — shop signs, app icons, and everything between. লোগো ডিজাইন ও ব্র্যান্ড আইডেন্টিটি, ঢাকা।",
+    "২৭ বছরের অভিজ্ঞ আইনজীবী — ফৌজদারি জামিন, ভূমি ও সম্পত্তি, পারিবারিক ও উত্তরাধিকার, হাইকোর্ট রিট, বাণিজ্যিক ও কর মামলা। সুপ্রিম কোর্ট বার অ্যাসোসিয়েশন, ঢাকা। Criminal bail, land, family, writ, corporate and tax matters — Supreme Court of Bangladesh.",
   keywords: [
-    "logo design",
-    "brand identity",
-    "Dhaka",
-    "Bangladesh",
-    "logo designer",
-    "লোগো ডিজাইন",
-    "ব্র্যান্ড আইডেন্টিটি",
-    "লোগো ডিজাইনার ঢাকা",
+    "আইনজীবী",
+    "অ্যাডভোকেট",
+    "উকিল",
+    "ঢাকার আইনজীবী",
+    "জামিনের আইনজীবী",
+    "ভূমি মামলার আইনজীবী",
+    "পারিবারিক আইনজীবী",
+    "রিট আবেদন",
+    "lawyer in Dhaka",
+    "advocate Supreme Court Bangladesh",
+    "criminal lawyer Dhaka",
+    "land dispute lawyer Bangladesh",
   ],
-  applicationName: "YourLogo",
-  authors: [{ name: "YourLogo" }],
+  applicationName: site.nameEn,
+  authors: [{ name: site.nameEn }],
   openGraph: {
     type: "website",
-    locale: "en_US",
-    alternateLocale: ["bn_BD"],
-    siteName: "YourLogo",
-    title: "YourLogo — A logo should feel inevitable.",
+    locale: "bn_BD",
+    alternateLocale: ["en_US"],
+    siteName: site.nameEn,
+    title: "অ্যাডভোকেট মো. আবদুল লতিফ — আইনজীবী, বাংলাদেশ সুপ্রিম কোর্ট",
     description:
-      "Identity studio in Dhaka. Marks, systems, and rebrands — in Bangla and Latin.",
+      "ফৌজদারি জামিন, ভূমি, পারিবারিক, রিট, বাণিজ্যিক ও কর — ২৭ বছরের অভিজ্ঞতা। চেম্বার: এসসিবিএ, শাহবাগ, ঢাকা।",
   },
   twitter: {
     card: "summary_large_image",
-    title: "YourLogo — Identity studio",
-    description: "Marks and brand systems from a studio in Dhaka.",
+    title: "অ্যাডভোকেট মো. আবদুল লতিফ — আইনজীবী",
+    description: "২৭ বছরের অভিজ্ঞতা — সুপ্রিম কোর্ট, ঢাকা।",
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport = {
-  themeColor: "#EFE8DC",
+  themeColor: "#0E1626",
   width: "device-width",
   initialScale: 1,
 };
@@ -53,26 +57,38 @@ export const viewport = {
 export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    "@type": ["Attorney", "LegalService"],
     name: site.name,
+    alternateName: site.nameEn,
     description:
-      "Identity studio in Dhaka designing logos and brand systems in Bangla and Latin.",
+      "Senior advocate with 27+ years before the Supreme Court of Bangladesh and Dhaka courts — criminal bail, land, family, writ, corporate and tax matters.",
     url,
     email: site.email,
-    image: `${url}/images/studio.jpg`,
+    telephone: site.phoneDisplay,
+    image: `${url}/images/portrait.jpg`,
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Room 512, SCBA Annex Building, Shahbagh",
       addressLocality: "Dhaka",
+      postalCode: "1000",
       addressCountry: "BD",
     },
-    areaServed: ["Bangladesh", "Worldwide"],
+    areaServed: ["Dhaka", "Bangladesh"],
     priceRange: "৳৳",
-    knowsLanguage: ["en", "bn"],
-    ...(site.phoneDisplay ? { telephone: site.phoneDisplay } : {}),
+    knowsLanguage: ["bn", "en"],
+    openingHours: "Su-Th 10:00-19:00",
+    knowsAbout: [
+      "Criminal defence and bail",
+      "Land and property law",
+      "Family and inheritance law",
+      "Constitutional writ petitions",
+      "Corporate and commercial disputes",
+      "Tax and VAT",
+    ],
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="bn" suppressHydrationWarning>
       <body>
         <Script id="lang-boot" strategy="beforeInteractive">
           {langBoot}
